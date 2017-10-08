@@ -8,12 +8,12 @@ class Slides extends Component {
         if (index === this.props.data.length -1) {
             return (
                 <View>
-                <Button 
+                {/* <Button 
                 title="Your Circle"
                 buttonStyle={styles.buttonStyle}
                 onPress={this.props.onCompleteCircle}
-                ></Button>
-                {/* <Button 
+                ></Button> */}
+                <Button 
                 title="Login"
                 buttonStyle={styles.buttonStyle}
                 onPress={this.props.onCompleteLogin}
@@ -24,7 +24,7 @@ class Slides extends Component {
                 buttonStyle={styles.buttonStyle}
                 onPress={this.props.onCompleteSignUp}
                 >
-                </Button> */}
+                </Button>
                 </View>
             );
         }

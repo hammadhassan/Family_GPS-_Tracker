@@ -3,9 +3,12 @@ import { View, Text, StyleSheet, Button } from 'react-native';
 import Slides from "./Slides";
 import { TabNavigator, StackNavigator, } from 'react-navigation';
 import Circle from "./Circle";
+import LoginScreen from "../Auth/Login";
+import SignupScreen from "../Auth/SignUp";
+
 const SLIDES_DATA = [
-    { text: "Welcome to Family Tracker" , color: '#03A9F4' },
-    { text: "Locate your family " , color: '#009688' },
+    // { text: "Welcome to Family Tracker" , color: '#03A9F4' },
+    // { text: "Locate your family " , color: '#009688' },
     { text: "Invite your family & Friends" , color: '#03A9F4' }
 ];
 
@@ -24,13 +27,18 @@ class WelcomeScreen extends Component {
     onSlidesCompleteCircle() {
         this.props.navigation.navigate("Home")
     }
-    // onSlidesCompleteSignUp() {
-    //     this.props.navigation.navigate("SignUp")
-    // }
+    onSlidesCompleteLogin() {
+        this.props.navigation.navigate("Login")
+    }
+    onSlidesCompleteSignUp() {
+        this.props.navigation.navigate("SignUp")
+    }
     render() {
         return (
         <Slides data={SLIDES_DATA} 
         onCompleteCircle={this.onSlidesCompleteCircle.bind(this)}
+        onCompleteLogin={this.onSlidesCompleteLogin.bind(this)}
+        onCompleteSignUp={this.onSlidesCompleteSignUp.bind(this)}
         />
         );
     }
@@ -38,14 +46,16 @@ class WelcomeScreen extends Component {
 
 const MainNavigator  = StackNavigator({
     Welcome: { screen: WelcomeScreen , navigationOptions: {tabBarVisible: false}},
+    Login : { screen: LoginScreen, navigationOptions: {tabBarVisible: false} },
+    SignUp : { screen: SignupScreen, navigationOptions: {tabBarVisible: false} }
   });
   
   const MainNav = TabNavigator({
     Main: {screen : MainNavigator , navigationOptions: {tabBarVisible: false} },
-    Home: {screen: Circle}
+    Home: {screen: Circle , navigationOptions: {tabBarVisible: false} }
     
   },
-  {tabBarVisible: false}
+//   {tabBarVisible: false}
 )
 
 export default (WelcomeScreen, MainNav);
