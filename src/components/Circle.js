@@ -154,6 +154,8 @@ import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import MapView from "react-native-maps";
 import { DrawerNavigator }from "react-navigation"
 import { Container, Header, Left, Body, Right, Button, Icon, Title } from 'native-base';
+import { Drawer } from 'native-base';
+import Family from '../Map/Family';
 // import {icon } from "react-native-vector-icons";
 class Circle extends Component {
   constructor(props) {
@@ -188,7 +190,17 @@ class Circle extends Component {
             onRegionChange={this.onRegionChange}
             toolbarEnabled */
   render() {
+    closeDrawer = () => {
+      this.drawer._root.close()
+    };
+    openDrawer = () => {
+      this.drawer._root.open()
+    };
     return (
+      <Drawer
+      ref={(ref) => { this.drawer = ref; }}
+      content={<Family navigator={this.navigator} />}
+      onClose={() => this.closeDrawer()} >
       <Container>
       <Header>
         <Left>
@@ -218,7 +230,7 @@ class Circle extends Component {
             />
       </View>
     </Container>
-        
+    </Drawer>    
     );
   }
 }
