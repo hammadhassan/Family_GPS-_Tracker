@@ -1,23 +1,17 @@
-import React, { Component } from 'react';
-import { TabNavigator, TabView } from 'react-navigation'
-import Icon from "react-native-vector-icons/FontAwesome";
-import stackNav from './stacknav';
-
-const tabNav = TabNavigator({
-    TabItem1: {
-        screen: stackNav,
-        navigationOptions: {
-            tabBarLabel:"Tab 1",
-            tabBarIcon: ({ tintColor }) => <Icon name={"glass"} size={30} color={tintColor} />
-        }
-    }
-
-    ///... add more tabs here
-
-}, {
-        tabBarOptions: {
-            activeTintColor: '#222',
-        }
-});
-
-export default tabNav;
+import React, { Component } from "react";
+import HomeScreen from "./HomeScreen.js";
+import MainScreenNavigator from "../ChatScreen/index.js";
+import Profile from "../ProfileScreen/index.js";
+import SideBar from "../SideBar/SideBar.js";
+import { DrawerNavigator } from "react-navigation";
+const HomeScreenRouter = DrawerNavigator(
+  {
+    Home: { screen: HomeScreen },
+    Chat: { screen: MainScreenNavigator },
+    Profile: { screen: Profile }
+  },
+  {
+    contentComponent: props => <SideBar {...props} />
+  }
+);
+export default HomeScreenRouter;

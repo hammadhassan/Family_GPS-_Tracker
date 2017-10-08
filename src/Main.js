@@ -1,40 +1,44 @@
-//import liraries
-import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { DrawerNavigator} from 'react-navigation';
-import tabNav from './tabnav';
-
-const drawernav = DrawerNavigator({
-    DrawerItem1: {
-        screen: tabNav,
-        navigationOptions: {
-            drawer: {
-                label: 'Drawer 1',
-                icon: ({ tintColor }) => <Icon name="rocket" size={24} />
-            },
-        },
-    },
-});
-// create a component
-class Main extends Component {
-    render() {
-        return (
-            <View style={styles.container}>
-                <Text>Main</Text>
-            </View>
-        );
-    }
+import React from "react";
+import { StatusBar } from "react-native";
+import { Container, Header, Title, Left, Icon, Right, Button, Body,
+    Content,Text, Card, CardItem } from "native-base";
+export default class HomeScreen extends React.Component {
+  render() {
+    return (
+      <Container>
+        <Header>
+          <Left>
+            <Button
+              transparent
+              onPress={() => this.props.navigation.navigate("DrawerOpen")}>
+              <Icon name="menu" />
+            </Button>
+          </Left>
+          <Body>
+            <Title>HomeScreen</Title>
+          </Body>
+          <Right />
+        </Header>
+        <Content padder>
+          <Card>
+            <CardItem>
+              <Body>
+                <Text>Chat App to talk some awesome people!</Text>
+              </Body>
+            </CardItem>
+          </Card>
+          <Button full rounded dark
+            style={{ marginTop: 10 }}
+            onPress={() => this.props.navigation.navigate("Chat")}>
+            <Text>Chat With People</Text>
+          </Button>
+          <Button full rounded primary
+            style={{ marginTop: 10 }}
+            onPress={() => this.props.navigation.navigate("Profile")}>
+            <Text>Goto Profiles</Text>
+          </Button>
+        </Content>
+      </Container>
+    );
+  }
 }
-
-// define your styles
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#2c3e50',
-    },
-});
-
-//make this component available to the app
-export default Main;

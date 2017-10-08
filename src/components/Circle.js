@@ -153,7 +153,8 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import MapView from "react-native-maps";
 import { DrawerNavigator }from "react-navigation"
-
+import { Container, Header, Left, Body, Right, Button, Icon, Title } from 'native-base';
+// import {icon } from "react-native-vector-icons";
 class Circle extends Component {
   constructor(props) {
     super(props)
@@ -188,8 +189,24 @@ class Circle extends Component {
             toolbarEnabled */
   render() {
     return (
+      <Container>
+      <Header>
+        <Left>
+          <Button transparent>
+            <Icon name='menu' />
+          </Button>
+        </Left>
+        <Body>
+          <Title>Header</Title>
+        </Body>
+        <Right>
+          <Button transparent>
+            <Icon name='md-person' />
+          </Button>
+        </Right>
+      </Header>
       <View style={styles.container}>
-        <MapView style={styles.map}
+          <MapView style={styles.map}
           region={this.state.location}
             mapType="standard"
             showsMyLocationButton
@@ -200,6 +217,8 @@ class Circle extends Component {
             toolbarEnabled
             />
       </View>
+    </Container>
+        
     );
   }
 }
