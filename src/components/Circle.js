@@ -190,9 +190,12 @@ class Circle extends Component {
             onRegionChange={this.onRegionChange}
             toolbarEnabled */
   render() {
+    // closeDrawer = () => {
+    //   this.drawer._root.close()
+    // };
     closeDrawer = () => {
-      this.drawer._root.close()
-    };
+      this.drawer._root.close();
+    }
     openDrawer = () => {
       this.drawer._root.open()
     };
@@ -200,7 +203,7 @@ class Circle extends Component {
       <Drawer
       ref={(ref) => { this.drawer = ref; }}
       content={<Family navigator={this.navigator} />}
-      onClose={() => this.closeDrawer()} >
+      onClose={() => this.closeDrawer.bind(this)} >
       <Container>
       <Header>
         <Left>
