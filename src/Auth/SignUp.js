@@ -31,7 +31,7 @@ static navigationOptions = {
         firebase.auth().createUserWithEmailAndPassword(email, password)
             // Handle respnse here
             .then((response) => {
-                firebase.database().ref('/').child(`nativeUser/${response.uid}`).set(this.state);
+                firebase.database().ref('/').child(`familyTracker/${response.uid}`).set(this.state);
                 this.nowSignupSuccess(),
                 this.props.navigation.navigate("Login"),
                 console.log("Response", response)

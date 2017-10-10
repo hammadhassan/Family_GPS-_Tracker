@@ -2,6 +2,7 @@ import { AppRegistry } from 'react-native';
 import App from './App';
 import WelcomeScreen from "./src/components/WelcomeScreen";
 import * as firebase from 'firebase';
+// import HomeScreen from "./src/HomeScreen/index";
 
 // export const firebaseConfig = {
 //     apiKey: "AIzaSyA2pLH8IpQGIRoAtrAR7z0dmcDjGG-iNTw",
@@ -21,9 +22,7 @@ import * as firebase from 'firebase';
     storageBucket: "",
     messagingSenderId: "783117883841"
   };
-  
   firebase.initializeApp(firebaseConfig);
-
 
 // AppRegistry.registerComponent('FamilyTracker', () => App);
 AppRegistry.registerComponent('FamilyTracker', () => WelcomeScreen);

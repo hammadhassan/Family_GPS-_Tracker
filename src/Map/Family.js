@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-
+import Location from "./Location"
 class Family extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>Family</Text>
+                <Location />
             </View>
         );
     }
