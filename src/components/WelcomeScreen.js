@@ -5,6 +5,7 @@ import { TabNavigator, StackNavigator, } from 'react-navigation';
 import Circle from "./Circle";
 import LoginScreen from "../Auth/Login";
 import SignupScreen from "../Auth/SignUp";
+import Msg from "./msg";
 
 const SLIDES_DATA = [
     // { text: "Welcome to Family Tracker" , color: '#03A9F4' },

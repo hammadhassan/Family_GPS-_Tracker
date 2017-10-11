@@ -16,11 +16,41 @@ class Circle extends Component {
         longitude: 67.0680423,
         latitudeDelta: 0.0002,
         longitudeDelta: 0.0021,
-      }
+      },
+      Data: {
+      lat: null,
+      long: null,
     }
   }
+}
 
+  componentWillMount() {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          error: null,
+        });
+        // alert(this.state.location.latitude)
+        // alert(this.state.location.longitude)
+      },
+      (error) => this.setState({ error: error.message }),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+    );
+  }
 
+  saveLocation() {
+    var DataArr = [];
+  let dbRef = firebase.database().ref("Location");
+  dbRef.on("child_added", snap => {
+    DataArr = this.state.Data;
+    DataArr.push(snap.val());
+    this.setState({
+      Data: DataArr
+    });
+  });
+}
 /*
   latitude: 24.8841584,
   longitude: 67.1379614,
@@ -53,6 +83,9 @@ class Circle extends Component {
     openDrawer() {
       this.drawer._root.open();
     }
+    onRegionChange(region) {
+      this.setState({ region });
+    }
   render() {
     // closeDrawer = () => {
     //   this.drawer._root.close()
@@ -75,15 +108,20 @@ class Circle extends Component {
         </Body>
         <Right>
           <Button transparent
-          onPress={this.logout.bind(this)}
+          onPress={this.saveLocation.bind(this)}
           >
             <Icon name='log-out' />
           </Button>
         </Right>
       </Header>
       <View style={styles.container}>
+      <Button transparent
+            onPress={this.saveLocation.bind(this)}>
+            <Icon name='menu' />
+            </Button>
           <MapView style={styles.map}
-          region={this.state.location}
+            region={this.state.location}
+            onRegionChange={this.onRegionChange}
             mapType="standard"
             showsMyLocationButton
             followsUserLocation={true}
@@ -91,7 +129,12 @@ class Circle extends Component {
             showsCompass
             moveOnMarkerPress
             toolbarEnabled
+            >
+           <MapView.Marker
+            coordinate={ this.state.location }
             />
+            </MapView>
+           
       </View>
     </Container>
     </Drawer>    
@@ -123,7 +166,12 @@ const styles = StyleSheet.create({
   },
 });
 
-
+/* {this.state.markers.map(marker => (
+            <MapView.Marker 
+              coordinate={marker.latlng}
+              title={marker.title}
+              description={marker.description}
+            /> */
 const HomeScreenRouter = DrawerNavigator(
   {
     Home: { screen: Circle },
