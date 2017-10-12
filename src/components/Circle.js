@@ -11,20 +11,37 @@ class Circle extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      marker1: true,
       location: {
         latitude: 24.882830499999997,
         longitude: 67.0680423,
         latitudeDelta: 0.0002,
         longitudeDelta: 0.0021,
       },
-      Data: {
-      lat: null,
-      long: null,
-    }
+      markers: []
+      // lat: null,
+      // long: null,
   }
 }
 
-  componentWillMount() {
+usersData() {
+  var DataArr = [];
+  let dbRef = firebase.database().ref("Location");
+  dbRef.on("child_added", snap => {
+    DataArr = this.state.Data;
+    DataArr.push(snap.val());
+    this.setState({
+      markers: DataArr
+    });
+  });
+  // alert(DataArr);
+};
+// componentDidMount() {
+// };
+componentWillMount() {
+  this.usersData.bind(this);
+  // alert(usersData)
+    console.disableYellowBox = true
     navigator.geolocation.getCurrentPosition(
       (position) => {
         this.setState({
@@ -47,10 +64,11 @@ class Circle extends Component {
     DataArr = this.state.Data;
     DataArr.push(snap.val());
     this.setState({
-      Data: DataArr
+      markers: DataArr
     });
   });
 }
+
 /*
   latitude: 24.8841584,
   longitude: 67.1379614,
@@ -83,9 +101,10 @@ class Circle extends Component {
     openDrawer() {
       this.drawer._root.open();
     }
-    onRegionChange(region) {
-      this.setState({ region });
-    }
+    // onRegionChange(location) {
+    //   this.setState({ location });
+    // }
+    // onRegionChange={this.onRegionChange}
   render() {
     // closeDrawer = () => {
     //   this.drawer._root.close()
@@ -121,7 +140,6 @@ class Circle extends Component {
             </Button>
           <MapView style={styles.map}
             region={this.state.location}
-            onRegionChange={this.onRegionChange}
             mapType="standard"
             showsMyLocationButton
             followsUserLocation={true}
@@ -130,11 +148,23 @@ class Circle extends Component {
             moveOnMarkerPress
             toolbarEnabled
             >
-           <MapView.Marker
-            coordinate={ this.state.location }
+            {this.state.markers.map((marker, index) => (
+          <MapView.Marker 
+            key={marker.key}
+            /* onPress={() => {
+              const marker = this.state.markers[index]
+              // marker.marker1 = !marker.marker1
+              this.setState({ markers: [
+                  ...this.state.markers.slice(0, index),
+                  marker,
+                  ...this.state.markers.slice(index + 1)
+              ]})}
+            } */
+            coordinate={marker.coordinate}         
+            /* image={marker.marker1 ? flagBlueImg : flagPinkImg} */
             />
+            ))}
             </MapView>
-           
       </View>
     </Container>
     </Drawer>    
