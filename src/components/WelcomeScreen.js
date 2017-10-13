@@ -5,7 +5,8 @@ import { TabNavigator, StackNavigator, } from 'react-navigation';
 import Circle from "./Circle";
 import LoginScreen from "../Auth/Login";
 import SignupScreen from "../Auth/SignUp";
-import Msg from "./msg";
+// import Msg from "./msg";
+import HomeScreen from "../HomeScreen/index.js";
 
 const SLIDES_DATA = [
     // { text: "Welcome to Family Tracker" , color: '#03A9F4' },
@@ -53,7 +54,8 @@ const MainNavigator  = StackNavigator({
   
   const MainNav = TabNavigator({
     Main: {screen : MainNavigator , navigationOptions: {tabBarVisible: false} },
-    Home: {screen: Circle , navigationOptions: {tabBarVisible: false} }
+    // Home: {screen: Circle , navigationOptions: {tabBarVisible: false} }
+    Home: {screen: HomeScreen , navigationOptions: {tabBarVisible: false} }
     
   },
 //   {tabBarVisible: false}
