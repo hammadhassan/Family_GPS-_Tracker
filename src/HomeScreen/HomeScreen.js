@@ -1,20 +1,6 @@
 import React from "react";
 import { StatusBar } from "react-native";
-import {
-  Button,
-  Text,
-  Container,
-  Card,
-  CardItem,
-  Body,
-  Content,
-  Header,
-  Title,
-  Left,
-  Icon,
-  Right
-} from "native-base";
-
+import { Container, Header, Title, Left, Icon, Right, Button, Body, Content,Text, Card, CardItem } from "native-base";
 export default class HomeScreen extends React.Component {
   render() {
     return (
@@ -23,8 +9,7 @@ export default class HomeScreen extends React.Component {
           <Left>
             <Button
               transparent
-              onPress={() => this.props.navigation.navigate("DrawerOpen")}
-            >
+              onPress={() => this.props.navigation.navigate("DrawerOpen")}>
               <Icon name="menu" />
             </Button>
           </Left>
@@ -41,22 +26,14 @@ export default class HomeScreen extends React.Component {
               </Body>
             </CardItem>
           </Card>
-          <Button
-            full
-            rounded
-            dark
+          <Button full rounded dark
             style={{ marginTop: 10 }}
-            onPress={() => this.props.navigation.navigate("Chat")}
-          >
+            onPress={() => this.props.navigation.navigate("Chat")}>
             <Text>Chat With People</Text>
           </Button>
-          <Button
-            full
-            rounded
-            primary
+          <Button full rounded primary
             style={{ marginTop: 10 }}
-            onPress={() => this.props.navigation.navigate("Profile")}
-          >
+            onPress={() => this.props.navigation.navigate("Profile")}>
             <Text>Goto Profiles</Text>
           </Button>
         </Content>

@@ -25,4 +25,4 @@ import * as firebase from 'firebase';
   firebase.initializeApp(firebaseConfig);
 
 // AppRegistry.registerComponent('FamilyTracker', () => App);
-AppRegistry.registerComponent('FamilyTracker', () => WelcomeScreen);
+AppRegistry.registerComponent('FamilyTracker', () => App);

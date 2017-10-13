@@ -1,25 +1,9 @@
 import React from "react";
 import { AppRegistry, Alert } from "react-native";
-
-import {
-  Text,
-  Container,
-  Card,
-  CardItem,
-  Body,
-  Content,
-  Header,
-  Left,
-  Right,
-  Icon,
-  Title,
-  Button,
-  H1
-} from "native-base";
+import { Container, Header, Left, Body, Title, Card, CardItem, Content, Right, Icon, Button, Text } from "native-base";
 import { StackNavigator } from "react-navigation";
 import EditScreenOne from "./EditScreenOne.js";
 import EditScreenTwo from "./EditScreenTwo.js";
-
 export default class Profile extends React.Component {
   componentDidMount() {
     Alert.alert("No Users Found", "Oops, Looks like you are not signed in");
@@ -37,13 +21,9 @@ export default class Profile extends React.Component {
               </Right>
             </CardItem>
           </Card>
-          <Button
-            full
-            rounded
-            primary
+          <Button full rounded primary
             style={{ marginTop: 10 }}
-            onPress={() => this.props.navigation.navigate("EditScreenOne")}
-          >
+            onPress={() => this.props.navigation.navigate("EditScreenOne")}>
             <Text>Goto EditScreen One</Text>
           </Button>
         </Content>

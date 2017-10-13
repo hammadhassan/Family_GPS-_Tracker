@@ -1,22 +1,6 @@
 import React from "react";
 import { AppRegistry, Alert } from "react-native";
-
-import {
-  Text,
-  Container,
-  Card,
-  CardItem,
-  Body,
-  Content,
-  Header,
-  Left,
-  Right,
-  Icon,
-  Title,
-  Button,
-  H1
-} from "native-base";
-
+import { Container, Card, CardItem, Body, Content, Header, Left, Right, Icon, Title, Button, Text } from "native-base";
 export default class EditScreenOne extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     header: (
@@ -46,13 +30,9 @@ export default class EditScreenOne extends React.Component {
               </Right>
             </CardItem>
           </Card>
-          <Button
-            full
-            rounded
-            primary
+          <Button full rounded primary
             style={{ marginTop: 10 }}
-            onPress={() => this.props.navigation.navigate("EditScreenTwo")}
-          >
+            onPress={() => this.props.navigation.navigate("EditScreenTwo")}>
             <Text>Goto EditScreenTwo</Text>
           </Button>
         </Content>
