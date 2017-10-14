@@ -43,7 +43,7 @@ componentDidMount() {
         Data: DataArr
       });
     });
-    alert("users")
+    // alert("users")
     }
   render() {
     const { navigate } = this.props.navigation;
@@ -58,7 +58,7 @@ componentDidMount() {
               <Icon name="menu" />
             </Button>
           </Left>
-          <Body>
+          <Body style={{flex: 1}}>
             <Title>{this.state.Data.name}</Title>
             <Title>Your Circle</Title>
           </Body>
@@ -68,15 +68,11 @@ componentDidMount() {
         {this.state.Data.map((value, i) => {
             return <List style={styles.list} key={i}>
               <ListItem >
-              <Icon name="user" />
+              <Icon name="md-people" />
               <Text style={styles.text}>Circle Name: {value.Circle.name}</Text>
-              <Text style={styles.text}>Circle Name: Text</Text>
-              <Icon name="settings" />
-              </ListItem>
-              <ListItem >
-              <Icon name="user" />
-              <Text style={styles.text}>Circle Name: Text</Text>
-              <Icon name="settings" />
+              {/* <Text style={styles.text}>Circle Name: Text</Text> */}
+              {/*<Icon style={styles.icon}
+              name="settings" />*/}
               </ListItem>
             </List>
           })}
@@ -85,3 +81,20 @@ componentDidMount() {
     );
   }
 }
+
+const styles = StyleSheet.create({
+    container: {
+    backgroundColor: "white"
+    },
+    list: {
+      borderWidth: 1
+    },
+    text: {
+      marginTop :20,
+      marginLeft :20,
+      marginRight: 20
+    },
+    icon: {
+        justifyContent: "flex-end"
+    }
+  })

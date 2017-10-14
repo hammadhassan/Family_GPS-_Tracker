@@ -55,7 +55,7 @@ static navigationOptions = {
     // Handle respnse here
     .then(() => {
         this.nowLoginSuccess(),
-        alert("Login"),
+        // alert("Login"),
        this.props.navigation.navigate("Home") 
     }
 )
@@ -91,7 +91,7 @@ logout() {
 
     renderButtonAndLoader() {
         if (this.state.isLoading) {
-            return <ActivityIndicator />
+            return <ActivityIndicator size="large" />
         }
         return (
             <Button 

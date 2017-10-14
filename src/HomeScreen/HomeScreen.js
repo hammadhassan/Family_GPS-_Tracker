@@ -1,43 +1,70 @@
-import React from "react";
-import { StatusBar } from "react-native";
+import React, { Component } from 'react';
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import { DeviceEventEmitter, StatusBar } from "react-native";
+import { RNLocation as Location } from "NativeModules";
 import { View, StyleSheet, Dimensions } from 'react-native';
-import MapView from "react-native-maps";
 import { Container, Header, Title, Left, Icon, Right, Button, Body, Content,Text, Card, CardItem } from "native-base";
 import firebase from "firebase";
 
-export default class HomeScreen extends React.Component {
+import {
+  Image,
+  ActionSheetIOS,
+  Linking,
+  Modal,
+  WebView,
+  AsyncStorage,
+  Alert,
+  AlertIOS
+} from "react-native";
+
+let locationTracker = null;
+
+export default class HomeScreen extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      marker1: true,
-      location: {
+      region: {
         latitude: 24.882830499999997,
         longitude: 67.0680423,
         latitudeDelta: 0.0002,
         longitudeDelta: 0.0021,
+        radius: 200
       },
-      markers: []
-      // lat: null,
-      // long: null,
+      markers: [{
+        title: 'Mark I',
+        coordinates: {
+          latitude: 24.88283,
+          longitude: 67.0680423
+        },
+      },
+      {
+        title: 'Mark II',
+        coordinates: {
+          latitude: 24.882642,
+          longitude: 67.067921
+        },  
+      },
+    +]
   }
 }
 
-usersData() {
-  var DataArr = [];
-  let dbRef = firebase.database().ref("Location");
-  dbRef.on("child_added", snap => {
-    DataArr = this.state.Data;
-    DataArr.push(snap.val());
-    this.setState({
-      markers: DataArr
-    });
-  });
+
+// usersData() {
+//   var DataArr = [];
+//   let dbRef = firebase.database().ref("Location");
+//   dbRef.on("child_added", snap => {
+//     DataArr = this.state.Data;
+//     DataArr.push(snap.val());
+//     this.setState({
+//       markers: DataArr
+//     });
+//   });
   // alert(DataArr);
-};
+// };
 // componentDidMount() {
 // };
 componentWillMount() {
-  this.usersData.bind(this);
+  // this.usersData.bind(this);
   // alert(usersData)
     console.disableYellowBox = true
     navigator.geolocation.getCurrentPosition(
@@ -55,17 +82,64 @@ componentWillMount() {
     );
   }
 
-  saveLocation() {
-    var DataArr = [];
-  let dbRef = firebase.database().ref("Location");
-  dbRef.on("child_added", snap => {
-    DataArr = this.state.Data;
-    DataArr.push(snap.val());
-    this.setState({
-      markers: DataArr
-    });
-  });
-}
+//   saveLocation() {
+//     var DataArr = [];
+//   let dbRef = firebase.database().ref("Location");
+//   dbRef.on("child_added", snap => {
+//     DataArr = this.state.Data;
+//     DataArr.push(snap.val());
+//     this.setState({
+//       markers: DataArr
+//     });
+//   });
+// }
+
+startTrackingLocation = () => {
+  firebase.analytics.logEventWithName("startTracking");
+  console.log("starting location listening");
+  this.setState({ gpsTrackingActive: true });
+
+  Location.requestAlwaysAuthorization();
+  Location.setAllowsBackgroundLocationUpdates(true);
+  Location.startUpdatingLocation();
+  Location.setDistanceFilter(250.0);
+  Location.startMonitoringSignificantLocationChanges();
+
+  locationTracker = DeviceEventEmitter.addListener(
+    "locationUpdated",
+    position => {
+      if (position == null) {
+        console.log("No location returned");
+        return;
+      }
+      this.setState({ lastPosition: position });
+      this.setState({ gpsTrackingActive: true });
+
+      let userId = this.props.userId;
+
+      Database.setUserLocation(
+        userId,
+        position.coords.latitude + "",
+        position.coords.longitude + "",
+        position.timestamp + ""
+      );
+      this.checkForSelfieSoiree(position);
+    }
+  );
+};
+
+stopTrackingLocation = () => {
+  console.log("Stop tracking location");
+  locationTracker.remove();
+  firebase.analytics.logEventWithName("stopTracking");
+  this.setState({ gpsTrackingActive: false });
+
+  Location.stopMonitoringSignificantLocationChanges();
+  Location.stopUpdatingLocation();
+
+  let userId = this.props.userId;
+  Database.hideUser(userId);
+};
 
 /*
   latitude: 24.8841584,
@@ -105,7 +179,7 @@ componentWillMount() {
             </Button>
           </Left>
           <Body>
-            <Title style={{alignItems: "center"}}>HomeScreen</Title>
+            <Title>HomeScreen</Title>
           </Body>
           <Right>
           <Button transparent
@@ -116,12 +190,20 @@ componentWillMount() {
         </Right>
         </Header>
         <View style={styles.container}>
-      <Button transparent
+      {/* <Button transparent
             onPress={this.saveLocation.bind(this)}>
             <Icon name='users' />
-            </Button>
+            </Button> */}
           <MapView style={styles.map}
-            region={this.state.location}
+            region={this.state.region}
+            /*mapType="standard"
+            showsMyLocationButton
+            followsUserLocation={true}
+            showsUserLocation={true}
+            showsCompass
+            moveOnMarkerPress
+            toolbarEnabled*/
+            enableHighAccuracy
             mapType="standard"
             showsMyLocationButton
             followsUserLocation={true}
@@ -129,14 +211,14 @@ componentWillMount() {
             showsCompass
             moveOnMarkerPress
             toolbarEnabled
-            >
-            {this.state.markers.map((marker, index) => (
-          <MapView.Marker 
-            key={marker.key}
-            coordinate={marker.coordinate}
-            />
+          >
+            {this.state.markers.map(marker => (
+              <MapView.Marker 
+                coordinate={marker.coordinates}
+                title={marker.title}
+              />
             ))}
-            </MapView>
+          </MapView>
       </View>
       </Container>
     );
@@ -146,14 +228,11 @@ componentWillMount() {
 const styles = StyleSheet.create({
   container: {
     // ...StyleSheet.absoluteFillObject,
-    height: 400,
-    width: 400,
+    // height: 400,
+    // width: 400,
     // justifyContent: 'flex-end',
-    alignItems: 'center',
+    // alignItems: 'center',
   },
-  // map: {
-  //   ...StyleSheet.absoluteFillObject,
-  // },
   map: {
     position: 'absolute',
     top: 0,
