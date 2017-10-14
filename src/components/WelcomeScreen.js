@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 import Slides from "./Slides";
-import { TabNavigator, StackNavigator, } from 'react-navigation';
+import { TabNavigator, StackNavigator, DrawerNavigator } from 'react-navigation';
 import Circle from "./Circle";
 import LoginScreen from "../Auth/Login";
 import SignupScreen from "../Auth/SignUp";
@@ -55,10 +55,14 @@ const MainNavigator  = StackNavigator({
   const MainNav = TabNavigator({
     Main: {screen : MainNavigator , navigationOptions: {tabBarVisible: false} },
     // Home: {screen: Circle , navigationOptions: {tabBarVisible: false} }
-    Home: {screen: HomeScreen , navigationOptions: {tabBarVisible: false} }
+    // Home: {screen: HomeScreen , navigationOptions: {tabBarVisible: false} }
     
   },
-//   {tabBarVisible: false}
+  //   {tabBarVisible: false}
 )
+const Draw = DrawerNavigator({
+    Map: {screen : MainNav  , navigationOptions: {tabBarVisible: false} },
+    Home: {screen: HomeScreen , navigationOptions: {tabBarVisible: false} }
+})
 
-export default (WelcomeScreen, MainNav);
+export default (WelcomeScreen, Draw);
