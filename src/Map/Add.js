@@ -46,7 +46,7 @@ class Add extends Component {
             <FormInput
             value={this.state.name}
             onChangeText={text => { this.setState({ text }) }}
-            placeholder="Please enter your Email"
+            placeholder="Please enter Name"
             />
             <Button
             title="Save"

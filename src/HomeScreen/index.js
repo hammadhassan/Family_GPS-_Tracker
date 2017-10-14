@@ -4,12 +4,16 @@ import MainScreenNavigator from "../ChatScreen/index.js";
 import Profile from "../ProfileScreen/index.js";
 import SideBar from "../SideBar/SideBar.js";
 import { DrawerNavigator } from "react-navigation";
+import Location from "../Map/Location";
+import Users from "../Map/Users";
 
 const HomeScreenRouter = DrawerNavigator(
   {
     Home: { screen: HomeScreen },
     Chat: { screen: MainScreenNavigator },
-    Profile: { screen: Profile }
+    Profile: { screen: Profile },
+    Location: { screen: Location},
+    YourCircle: { screen: Users }
   },
   {
     contentComponent: props => <SideBar {...props} />

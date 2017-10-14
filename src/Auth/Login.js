@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, ActivityIndicator, } from 'react-native';
 import * as firebase from 'firebase';
-// import { Spinner } from './common';
-import { Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
+import {FormLabel, Button, FormInput, FormValidationMessage } from 'react-native-elements';
+// import { Button } from "native-base";
 
 export default class LoginScreen extends Component {
 
@@ -37,8 +37,8 @@ static navigationOptions = {
     constructor(props) {
         super(props)
         this.state = {
-        email: '',
-        password: '',
+        email: 'hammad@gmail.com',
+        password: '123456',
         error: '',
         isLoading: false
     }
@@ -97,10 +97,10 @@ logout() {
             <Button 
             onPress={this.Login.bind(this)}
             title="Login"
-            raised={true}
-            backgroundColor= "#03A9F4"
+            raised
+            backgroundColor= "#009688"
             fontSize={24}
-            borderRadius= {5}
+            //borderRadius= {5}
             fontWeight="bold"
             // buttonStyle={{flex: 1}}
             />
@@ -161,5 +161,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#03A9F4",
     fontSize: 24,
     borderRadius: 5
-    }
+    },
+    // button: {
+    //     alignItems: "center",
+    //     justifyContent: "center",
+    //     fontWeight: "bold",
+    //     color: "white",
+    //     flex: 1
+    //   },
 });

@@ -1,7 +1,29 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
 import firebase from "firebase";
-import { Container, Header, Left, Body, Right, Button, Icon, Title } from 'native-base';
+import { AppRegistry, StatusBar } from "react-native";
+import {
+  Button,
+  Text,
+  Container,
+  Card,
+  CardItem,
+  Body,
+  Content,
+  Header,
+  Left,
+  Right,
+  Icon,
+  Title,
+  Input,
+  InputGroup,
+  Item,
+  Tab,
+  Tabs,
+  Footer,
+  FooterTab,
+  Label
+} from "native-base";
+import HomeScreen from "../HomeScreen";
 
 class Location extends Component {
 
@@ -29,16 +51,16 @@ class Location extends Component {
       );
     }
   saveLocation() {
-    var date = new Date();
-    var day = date.getDate();
-    var month = date.getMonth()+1;
-    var year = date.getFullYear();
-    var fullDate = day + '/' + month + '/' + year;
+    // var date = new Date();
+    // var day = date.getDate();
+    // var month = date.getMonth()+1;
+    // var year = date.getFullYear();
+    // var fullDate = day + '/' + month + '/' + year;
     var usersData = {
-      Location: {
+      Locations: {
         lat: this.state.latitude, 
         long: this.state.longitude,
-        date: fullDate,
+        // date: fullDate,
       }
     }
     var db = firebase.database();
@@ -47,19 +69,41 @@ class Location extends Component {
   }
 
   render() {
+    const { navigate } = this.props.navigation;
     return (
-
-      <View>
-
-        <Button title="Save Location"
-          onPress={this.saveLocation.bind(this)}
-        />
-
-        <Text>latitude : {this.state.latitude}</Text>
+      <Container>
+        <Header>
+          <Left>
+            <Button
+              transparent
+              onPress={() => this.props.navigation.navigate("DrawerOpen")}
+            >
+              <Icon name="menu" />
+            </Button>
+          </Left>
+          <Body>
+            <Title>Save Location</Title>
+          </Body>
+          <Right />
+        </Header>
+        <Content padder>
+          {/* <Item floatingLabel style={{ marginTop: 20 }}>
+            <Label>Nine Chat</Label>
+            <Input />
+          </Item> */}
+          <Button
+            success
+            style={{ marginTop: 20, alignSelf: "center" }}
+            onPress={this.saveLocation.bind(this)}
+          >
+            <Text>Save Location</Text>
+          </Button>
+          <Text>latitude : {this.state.latitude}</Text>
         <Text>longitude : {this.state.longitude}</Text>
-
-      </View>
+        </Content>
+      </Container>
     );
   }
 }
 export default Location;
+

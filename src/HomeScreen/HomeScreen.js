@@ -109,7 +109,7 @@ componentWillMount() {
           </Body>
           <Right>
           <Button transparent
-          onPress={this.saveLocation.bind(this)}
+          onPress={this.logout.bind(this)}
           >
             <Icon name='log-out' />
           </Button>
@@ -130,7 +130,12 @@ componentWillMount() {
             moveOnMarkerPress
             toolbarEnabled
             >
-            
+            {this.state.markers.map((marker, index) => (
+          <MapView.Marker 
+            key={marker.key}
+            coordinate={marker.coordinate}
+            />
+            ))}
             </MapView>
       </View>
       </Container>
