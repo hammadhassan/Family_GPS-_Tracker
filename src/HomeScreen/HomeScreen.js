@@ -43,11 +43,9 @@ export default class HomeScreen extends Component {
           latitude: 24.882642,
           longitude: 67.067921
         },  
-      },
-    +]
+      }]
+    }
   }
-}
-
 
 // usersData() {
 //   var DataArr = [];
@@ -61,8 +59,7 @@ export default class HomeScreen extends Component {
 //   });
   // alert(DataArr);
 // };
-// componentDidMount() {
-// };
+
 componentWillMount() {
   // this.usersData.bind(this);
   // alert(usersData)
@@ -94,79 +91,61 @@ componentWillMount() {
 //   });
 // }
 
-startTrackingLocation = () => {
-  firebase.analytics.logEventWithName("startTracking");
-  console.log("starting location listening");
-  this.setState({ gpsTrackingActive: true });
+// startTrackingLocation = () => {
+//   firebase.analytics.logEventWithName("startTracking");
+//   console.log("starting location listening");
+//   this.setState({ gpsTrackingActive: true });
 
-  Location.requestAlwaysAuthorization();
-  Location.setAllowsBackgroundLocationUpdates(true);
-  Location.startUpdatingLocation();
-  Location.setDistanceFilter(250.0);
-  Location.startMonitoringSignificantLocationChanges();
+//   Location.requestAlwaysAuthorization();
+//   Location.setAllowsBackgroundLocationUpdates(true);
+//   Location.startUpdatingLocation();
+//   Location.setDistanceFilter(250.0);
+//   Location.startMonitoringSignificantLocationChanges();
 
-  locationTracker = DeviceEventEmitter.addListener(
-    "locationUpdated",
-    position => {
-      if (position == null) {
-        console.log("No location returned");
-        return;
-      }
-      this.setState({ lastPosition: position });
-      this.setState({ gpsTrackingActive: true });
+//   locationTracker = DeviceEventEmitter.addListener(
+//     "locationUpdated",
+//     position => {
+//       if (position == null) {
+//         console.log("No location returned");
+//         return;
+//       }
+//       this.setState({ lastPosition: position });
+//       this.setState({ gpsTrackingActive: true });
 
-      let userId = this.props.userId;
+//       let userId = this.props.userId;
 
-      Database.setUserLocation(
-        userId,
-        position.coords.latitude + "",
-        position.coords.longitude + "",
-        position.timestamp + ""
-      );
-      this.checkForSelfieSoiree(position);
+//       Database.setUserLocation(
+//         userId,
+//         position.coords.latitude + "",
+//         position.coords.longitude + "",
+//         position.timestamp + ""
+//       );
+//       this.checkForSelfieSoiree(position);
+//     }
+//   );
+// };
+
+// stopTrackingLocation = () => {
+//   console.log("Stop tracking location");
+//   locationTracker.remove();
+//   firebase.analytics.logEventWithName("stopTracking");
+//   this.setState({ gpsTrackingActive: false });
+
+//   Location.stopMonitoringSignificantLocationChanges();
+//   Location.stopUpdatingLocation();
+
+//   let userId = this.props.userId;
+//   Database.hideUser(userId);
+// };
+
+  logout() {
+        firebase.auth().signOut().then( () => {
+        // Sign-out successful.
+        this.props.navigation.navigate("Welcome");
+        }).catch(function(error) {
+        // An error happened.
+        });
     }
-  );
-};
-
-stopTrackingLocation = () => {
-  console.log("Stop tracking location");
-  locationTracker.remove();
-  firebase.analytics.logEventWithName("stopTracking");
-  this.setState({ gpsTrackingActive: false });
-
-  Location.stopMonitoringSignificantLocationChanges();
-  Location.stopUpdatingLocation();
-
-  let userId = this.props.userId;
-  Database.hideUser(userId);
-};
-
-/*
-  latitude: 24.8841584,
-  longitude: 67.1379614,
-  latitudeDelta: 0.0002,
-  longitudeDelta: 0.0021,*/
-
-  // onRegionChange(region) {
-  //   this.setState({ region });
-  // }
-/* initialRegion={this.state.region}
-            mapType="standard"
-            showsMyLocationButton
-            followsUserLocation={true}
-            showsUserLocation={true}
-            // showsCompass
-            moveOnMarkerPress
-            onRegionChange={this.onRegionChange}
-            toolbarEnabled */
-    logout() {
-            firebase.auth().signOut().then( () => {
-            // Sign-out successful.
-            this.props.navigation.navigate("Welcome");
-            }).catch(function(error) {
-            // An error happened.
-            });
-        }
   render() {
     return (
       <Container>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, ActivityIndicator, } from 'react-native';
+import { StyleSheet, View, Text, ActivityIndicator, AsyncStorage } from 'react-native';
 import * as firebase from 'firebase';
 import {FormLabel, Button, FormInput, FormValidationMessage } from 'react-native-elements';
 // import { Button } from "native-base";
@@ -44,6 +44,24 @@ static navigationOptions = {
     }
     this.logout = this.logout.bind(this)
 }
+
+    componentWillMount() {
+    //    AsyncStorage.setItem("useruid","")
+        this.checkstorage()
+    }
+    checkstorage(){
+        AsyncStorage.getItem("useruid").then((respon) => {
+         userUid = respon    
+           if (userUid !== null){
+            this.navig()
+      }
+    })
+}
+
+    navig(){
+        this.props.navigation.navigate('MenuRoute')
+    }
+
     Login() {
         const { email, password } = this.state;
         this.setState({ 
@@ -53,12 +71,15 @@ static navigationOptions = {
 
     firebase.auth().signInWithEmailAndPassword(email, password)
     // Handle respnse here
-    .then(() => {
-        this.nowLoginSuccess(),
+    .then((responce) => {
+        const uid = responce.uid
+        AsyncStorage.setItem("useruid", uid)
+            .then(() => {
+                this.nowLoginSuccess()
+            })
         // alert("Login"),
        this.props.navigation.navigate("Home") 
-    }
-)
+    })
     // Handle Errors here.
     .catch((error) => {
         var errorMessage = error.message;
