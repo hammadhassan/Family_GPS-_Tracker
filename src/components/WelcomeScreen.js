@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, Button, StatusBar } from 'react-native';
 import Slides from "./Slides";
 import { TabNavigator, StackNavigator, DrawerNavigator } from 'react-navigation';
 import Circle from "./Circle";
@@ -9,9 +9,9 @@ import SignupScreen from "../Auth/SignUp";
 import HomeScreen from "../HomeScreen/index.js";
 
 const SLIDES_DATA = [
-    // { text: "Welcome to Family Tracker" , color: '#03A9F4' },
-    // { text: "Locate your family " , color: '#009688' },
-    { text: "Invite your family & Friends" , color: '#03A9F4' }
+    // { text: "Welcome to Family Tracker" , color: '#009688' },
+    // { text: "Locate your Family & Friends" , color: '#03A9F4' },
+    { text: "Invite your Family & Friends" , color: '#009688' }
 ];
 
 class WelcomeScreen extends Component {

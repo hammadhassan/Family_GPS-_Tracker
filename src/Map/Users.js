@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {StyleSheet } from 'react-native';
-import { AppRegistry, View, StatusBar } from "react-native";
+import { AppRegistry, View, StatusBar, TouchableOpacity } from "react-native";
 import {
   Button,
   Text,
@@ -66,15 +66,13 @@ componentDidMount() {
         </Header>
         <Content>
         {this.state.Data.map((value, i) => {
-            return <List style={styles.list} key={i}>
-              <ListItem >
+            return <TouchableOpacity style={styles.list} key={i}>
               <Icon name="md-people" />
               <Text style={styles.text}>Circle Name: {value.Circle.name}</Text>
               {/* <Text style={styles.text}>Circle Name: Text</Text> */}
               {/*<Icon style={styles.icon}
               name="settings" />*/}
-              </ListItem>
-            </List>
+            </TouchableOpacity>
           })}
         </Content>
       </Container>

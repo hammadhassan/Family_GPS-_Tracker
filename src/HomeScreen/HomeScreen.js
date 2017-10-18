@@ -79,64 +79,18 @@ componentWillMount() {
     );
   }
 
-//   saveLocation() {
-//     var DataArr = [];
+// componentDidMount() {
+//   var DataArr = [];
 //   let dbRef = firebase.database().ref("Location");
 //   dbRef.on("child_added", snap => {
-//     DataArr = this.state.Data;
+//     DataArr = this.state.markers;
 //     DataArr.push(snap.val());
 //     this.setState({
 //       markers: DataArr
 //     });
+//     alert(markers);
 //   });
-// }
-
-// startTrackingLocation = () => {
-//   firebase.analytics.logEventWithName("startTracking");
-//   console.log("starting location listening");
-//   this.setState({ gpsTrackingActive: true });
-
-//   Location.requestAlwaysAuthorization();
-//   Location.setAllowsBackgroundLocationUpdates(true);
-//   Location.startUpdatingLocation();
-//   Location.setDistanceFilter(250.0);
-//   Location.startMonitoringSignificantLocationChanges();
-
-//   locationTracker = DeviceEventEmitter.addListener(
-//     "locationUpdated",
-//     position => {
-//       if (position == null) {
-//         console.log("No location returned");
-//         return;
-//       }
-//       this.setState({ lastPosition: position });
-//       this.setState({ gpsTrackingActive: true });
-
-//       let userId = this.props.userId;
-
-//       Database.setUserLocation(
-//         userId,
-//         position.coords.latitude + "",
-//         position.coords.longitude + "",
-//         position.timestamp + ""
-//       );
-//       this.checkForSelfieSoiree(position);
-//     }
-//   );
-// };
-
-// stopTrackingLocation = () => {
-//   console.log("Stop tracking location");
-//   locationTracker.remove();
-//   firebase.analytics.logEventWithName("stopTracking");
-//   this.setState({ gpsTrackingActive: false });
-
-//   Location.stopMonitoringSignificantLocationChanges();
-//   Location.stopUpdatingLocation();
-
-//   let userId = this.props.userId;
-//   Database.hideUser(userId);
-// };
+//   }
 
   logout() {
         firebase.auth().signOut().then( () => {

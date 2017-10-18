@@ -45,18 +45,18 @@ static navigationOptions = {
     this.logout = this.logout.bind(this)
 }
 
-    componentWillMount() {
-    //    AsyncStorage.setItem("useruid","")
-        this.checkstorage()
-    }
-    checkstorage(){
-        AsyncStorage.getItem("useruid").then((respon) => {
-         userUid = respon    
-           if (userUid !== null){
-            this.navig()
-      }
-    })
-}
+//     componentWillMount() {
+//     //    AsyncStorage.setItem("useruid","")
+//         this.checkstorage()
+//     }
+//     checkstorage(){
+//         AsyncStorage.getItem("useruid").then((respon) => {
+//          userUid = respon    
+//            if (userUid !== null){
+//             this.navig()
+//       }
+//     })
+// }
 
     navig(){
         this.props.navigation.navigate('MenuRoute')
@@ -72,11 +72,11 @@ static navigationOptions = {
     firebase.auth().signInWithEmailAndPassword(email, password)
     // Handle respnse here
     .then((responce) => {
-        const uid = responce.uid
-        AsyncStorage.setItem("useruid", uid)
-            .then(() => {
-                this.nowLoginSuccess()
-            })
+        // const uid = responce.uid
+        // AsyncStorage.setItem("useruid", uid)
+        //     .then(() => {
+        //     })
+            this.nowLoginSuccess(),
         // alert("Login"),
        this.props.navigation.navigate("Home") 
     })

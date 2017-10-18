@@ -10,7 +10,7 @@ import Users from "../Map/Users";
 const HomeScreenRouter = DrawerNavigator(
   {
     Home: { screen: HomeScreen },
-    Chat: { screen: MainScreenNavigator },
+    AddCircle: { screen: MainScreenNavigator },
     Profile: { screen: Profile },
     Location: { screen: Location},
     YourCircle: { screen: Users }

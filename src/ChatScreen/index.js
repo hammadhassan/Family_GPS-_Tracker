@@ -6,9 +6,9 @@ import { TabNavigator } from "react-navigation";
 import { Button, Text, Icon, Footer, FooterTab } from "native-base";
 export default (MainScreenNavigator = TabNavigator(
   {
-    LucyChat: { screen: LucyChat },
-    JadeChat: { screen: JadeChat },
-    NineChat: { screen: NineChat }
+    Lucy: { screen: LucyChat },
+    Jade: { screen: JadeChat },
+    Nine: { screen: NineChat }
   },
   {
     tabBarPosition: "bottom",
@@ -19,24 +19,24 @@ export default (MainScreenNavigator = TabNavigator(
             <Button
               vertical
               active={props.navigationState.index === 0}
-              onPress={() => props.navigation.navigate("LucyChat")}>
-              <Icon name="bowtie" />
-              <Text>Lucy</Text>
+              onPress={() => props.navigation.navigate("Lucy")}>
+              <Icon name="md-people" />
+              <Text>Add Circle</Text>
             </Button>
-            <Button
+            {/* <Button
               vertical
               active={props.navigationState.index === 1}
-              onPress={() => props.navigation.navigate("JadeChat")}>
+              onPress={() => props.navigation.navigate("Jade")}>
               <Icon name="briefcase" />
               <Text>Nine</Text>
             </Button>
             <Button
               vertical
               active={props.navigationState.index === 2}
-              onPress={() => props.navigation.navigate("NineChat")}>
+              onPress={() => props.navigation.navigate("Nine")}>
               <Icon name="headset" />
               <Text>Jade</Text>
-            </Button>
+            </Button> */}
           </FooterTab>
         </Footer>
       );
