@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, ActivityIndicator, AsyncStorage } from 'react-native';
+import { StyleSheet, View, Text, ActivityIndicator, AsyncStorage, Alert, ToastAndroid } from 'react-native';
 import * as firebase from 'firebase';
 import {FormLabel, Button, FormInput, FormValidationMessage } from 'react-native-elements';
 // import { Button } from "native-base";
@@ -45,18 +45,22 @@ static navigationOptions = {
     this.logout = this.logout.bind(this)
 }
 
-//     componentWillMount() {
-//     //    AsyncStorage.setItem("useruid","")
-//         this.checkstorage()
-//     }
-//     checkstorage(){
-//         AsyncStorage.getItem("useruid").then((respon) => {
-//          userUid = respon    
-//            if (userUid !== null){
-//             this.navig()
-//       }
-//     })
-// }
+    componentWillMount() {
+        console.disableYellowBox = true
+    }
+    // componentWillMount() {
+    //    AsyncStorage.setItem("userid","")
+    //     this.checkstorage()
+    // }
+    
+    // checkstorage() {
+    //     AsyncStorage.getItem("userid").then((respon) => {
+    //      userUid = respon    
+    //        if (userid !== null){
+    //         this.navig()
+    //         }
+    //     })
+    // }
 
     navig(){
         this.props.navigation.navigate('MenuRoute')
@@ -73,11 +77,27 @@ static navigationOptions = {
     // Handle respnse here
     .then((responce) => {
         // const uid = responce.uid
-        // AsyncStorage.setItem("useruid", uid)
+        // AsyncStorage.setItem("userid", uid, JSON.stringify(responce), (error, result) => {
+        //     if (error) {
+        //         alert("error", error)
+        //     } else {
+        //         AsyncStorage.getItem("userid", (error, result) => {
+        //             if (result) {
+        //                 alert(result)
+        //                 result = JSON.parse(result);
+        //                 ToastAndroid.show('Thanks for Login', ToastAndroid.SHORT);
+        //                 this.nowLoginSuccess(),
+        //                 this.props.navigation.navigate("Home") 
+        //             } else {
+        //                 alert(error)
+        //             }
+        //         })
+        //     }
+        // });
         //     .then(() => {
         //     })
-            this.nowLoginSuccess(),
-        // alert("Login"),
+        this.nowLoginSuccess(),
+        ToastAndroid.show('Login', ToastAndroid.BOTTOM, 25, 50);
        this.props.navigation.navigate("Home") 
     })
     // Handle Errors here.
@@ -94,6 +114,7 @@ static navigationOptions = {
 
 logout() {
         firebase.auth().signOut().then( () => {
+        // ToastAndroid.show('Logout', ToastAndroid.SHORT);
         // Sign-out successful.
         this.props.navigation.navigate("Welcome");
         }).catch(function(error) {

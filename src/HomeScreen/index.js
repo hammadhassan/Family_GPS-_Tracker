@@ -6,14 +6,16 @@ import SideBar from "../SideBar/SideBar.js";
 import { DrawerNavigator } from "react-navigation";
 import Location from "../Map/Location";
 import Users from "../Map/Users";
+import Invite from "../Map/Invite";
 
 const HomeScreenRouter = DrawerNavigator(
   {
     Home: { screen: HomeScreen },
     AddCircle: { screen: MainScreenNavigator },
-    Profile: { screen: Profile },
-    Location: { screen: Location},
-    YourCircle: { screen: Users }
+    // Profile: { screen: Profile },
+    // Location: { screen: Location},
+    YourCircle: { screen: Users },
+    Invite: { screen: Invite }
   },
   {
     contentComponent: props => <SideBar {...props} />

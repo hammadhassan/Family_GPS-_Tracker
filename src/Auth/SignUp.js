@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, ActivityIndicator, } from 'react-native';
+import { StyleSheet, View, Text, ActivityIndicator, AsyncStorage, Alert, ToastAndroid } from 'react-native';
 import * as firebase from 'firebase';
-// import { Spinner } from './common';
 import { Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 
 export default class SignupScreen extends Component {
@@ -20,21 +19,23 @@ static navigationOptions = {
         }
     }
 
+componentWillMount() {
+        console.disableYellowBox = true
+    }
+
     SignUp() {
         const { email, password } = this.state;
-        
         this.setState({ 
             error: '',
             isLoading: true
         })
-
         firebase.auth().createUserWithEmailAndPassword(email, password)
             // Handle respnse here
             .then((response) => {
                 firebase.database().ref('/').child(`familyTracker/${response.uid}`).set(this.state);
                 this.nowSignupSuccess(),
                 this.props.navigation.navigate("Login"),
-                console.log("Response", response)
+                ToastAndroid.show('Account Created', ToastAndroid.SHORT);
             })
             .catch((error) => {
                 // Handle Errors here.
@@ -56,7 +57,7 @@ static navigationOptions = {
 
     renderButtonAndLoader() {
         if (this.state.isLoading) {
-            return <ActivityIndicator />
+            return <ActivityIndicator size="large" />
         }
         return (
         <Button onPress={this.SignUp.bind(this)}

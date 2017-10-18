@@ -1,5 +1,5 @@
 import React from "react";
-import { AppRegistry, View, StatusBar } from "react-native";
+import { Alert, ToastAndroid, View, StatusBar } from "react-native";
 import { Container, Body, Content, Header, Left, Right, Icon, Title, Input, Item, Label, Button, Text } from "native-base";
 import HomeScreen from "../HomeScreen";
 // import { FormLabel, FormInput } from 'react-native-elements'
@@ -14,7 +14,9 @@ export default class LucyChat extends React.Component {
         // uid: ""
     }
 }
-createCircle() {
+createCircle(circle) {
+  var user = firebase.auth().currentUser;
+  Admin = user.uid;
     var addCircle = {
         Circle: {
           name: this.state.name,
@@ -24,7 +26,7 @@ createCircle() {
       var db = firebase.database();
       let dbRef = db.ref().child('Circles');
       dbRef.push(addCircle)
-      alert("your Circle has been Saved")
+      ToastAndroid.show("Your Circle has been Saved", ToastAndroid.SHORT);
       this.setState({
         name: ""
       })
