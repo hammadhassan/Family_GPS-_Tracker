@@ -14,7 +14,7 @@ export default class LucyChat extends React.Component {
         // uid: ""
     }
 }
-createCircle(circle) {
+createCircle() {
   var user = firebase.auth().currentUser;
   Admin = user.uid;
     var addCircle = {
@@ -24,9 +24,10 @@ createCircle(circle) {
         }
       }
       var db = firebase.database();
-      let dbRef = db.ref().child('Circles');
+      let dbRef = db.ref().child('Circles/');
       dbRef.push(addCircle)
       ToastAndroid.show("Your Circle has been Saved", ToastAndroid.SHORT);
+      // this.props.navigate("Invite")
       this.setState({
         name: ""
       })

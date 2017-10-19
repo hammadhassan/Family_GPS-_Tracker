@@ -20,31 +20,32 @@ import {
   Tabs,
   Footer,
   FooterTab,
-  Label
+  Label,
+  Item
 } from "native-base";
 import * as firebase from 'firebase';
 
 class Invite extends Component {
   constructor() {
     super();
-    // this.state = {
-    //   Circle: []
-    // };
+    this.state = {
+      circle: []
+    };
   }
   joinCircle(GroupId) {
     let flag = false;
     let currentUserId = firebase.auth().currentUser.uid;
-        // console.log('currentUser', currentUserId);
-        // let members = {
-        //     Uid: currentUserId
-        // }
+        console.log('currentUser', currentUserId);
+        let members = {
+            Uid: currentUserId
+        }
         firebase.database().ref('Circle/').once('value', (data) => {
             let obj = data.val();
             obj.groupId = data.key;
-            // console.log("=>>>>>", obj)
+            console.log("=>>>>>", obj)
             let nodeKey;
             for (var key in obj) {
-                if (joining.joinKey === key.slice(key.length - 5)) {
+                if (joining.joinKey === key.slice(key.length - 6)) {
                     flag = true;
                     nodeKey = key;
                     firebase.database().ref('Circle/' + nodeKey + '/members/').push(currentUserId)
@@ -57,40 +58,40 @@ class Invite extends Component {
                 ToastAndroid.show('Please enter your group key', ToastAndroid.SHORT);
             }
 
-            // console.log("nodeKey", nodeKey)
+            console.log("nodeKey", nodeKey)
         })
   }
 
 
   render() {
-    const {
-            Circle
-        } = this.props;
-  const { navigate } = this.props.navigation;
-  let AllGroups = Object.keys(this.props.Circle).map((key, index) => {
-            let val = this.props.Circle[key];
-            let GroupId = key;
-            return (
-                <List key={index}>
-                    <ListItem avatar>
-                        // <Left>
-                        //     <Thumbnail size={50} source={groupAvatar} />
-                        // </Left>
-                        <Body>
-                            <Text>{val.Gname}</Text>
-                        </Body>
-                        <Right>
-                            <Button onPress={this.joinCircle.bind(this, GroupId)} bordered >
-                                <Text>
-                                    Open
-                                </Text>
-                            </Button>
-                        </Right>
-                    </ListItem>
-                </List>
-            )
-        }
-        )
+  //   const {
+  //           Circle
+  //       } = this.props;
+  // const { navigate } = this.props.navigation;
+  // let AllGroups = Object.keys(this.props.Circle).map((key, index) => {
+  //           let val = this.props.Circle[key];
+  //           let GroupId = key;
+  //           return (
+  //               <List key={index}>
+  //                   <ListItem avatar>
+  //                       // <Left>
+  //                       //     <Thumbnail size={50} source={groupAvatar} />
+  //                       // </Left>
+  //                       <Body>
+  //                           <Text>{val.Gname}</Text>
+  //                       </Body>
+  //                       <Right>
+  //                           <Button onPress={this.joinCircle.bind(this, GroupId)} bordered >
+  //                               <Text>
+  //                                   Open
+  //                               </Text>
+  //                           </Button>
+  //                       </Right>
+  //                   </ListItem>
+  //               </List>
+  //           )
+  //       }
+  //       )
   // const { navigate } = this.props.navigation;
     return (
       <Container>
@@ -108,14 +109,27 @@ class Invite extends Component {
           </Body>
           <Right />
         </Header>
-        <Content>
-            {AllGroups}
+        <Content padder>
+          <Item floatingLabel style={{ marginTop: 20 }}>
+            <Label>Invite Code</Label>
+            <Input 
+            value={this.state.name}
+            onChangeText={circle => { this.setState({ circle }) }}
+            //placeholder="Please enter Name"
+            />
+          </Item>
+          <Button
+            style={{ marginTop: 20, alignSelf: "center" }}
+            onPress={this.joinCircle.bind(this)}>
+            <Text>Join Circle</Text>
+          </Button>
         </Content>
       </Container>
     );
   }
 }
 
+//{AllGroups}
 
 const styles = StyleSheet.create({
   container: {

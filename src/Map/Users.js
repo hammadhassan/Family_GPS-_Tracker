@@ -33,10 +33,28 @@ export default class Users extends Component {
         Data : []
       };
     }
+    openUser() {
+      
+      let currentUser = firebase.auth().currentUser.uid;
+      firebase.database().ref('Circles/' + currentUser + '/').on('value', (data) => {
+        let obj = data.val();
+        obj.groupId = data.key;
+        alert(data);
+        alert(currentUser);
+        // dispatch(SeletedGroupData(obj));
+        // if (obj.Admin === currentUser) {
+        //     Actions.adminright();
+        // } else {
+        //     Actions.groupJoin()
+        // }
+    })
+  }
+
 componentDidMount() {
     var DataArr = [];
-    let dbRef = firebase.database().ref("Circles");
+    let dbRef = firebase.database().ref("Circles/");
     dbRef.on("child_added", snap => {
+      // let obj = data.val();
       DataArr = this.state.Data;
       DataArr.push(snap.val());
       this.setState({
@@ -47,6 +65,11 @@ componentDidMount() {
     }
   render() {
     const { navigate } = this.props.navigation;
+    // const {Circle} = this.props;
+    // alert(Circle)
+    // let AllGroups = Object.keys(this.props.Group).map((key, index) => {
+    // let val = this.props.Group[key];
+    // let GroupId = key;
     return (
       <Container>
         <Header>
@@ -66,13 +89,24 @@ componentDidMount() {
         </Header>
         <Content>
         {this.state.Data.map((value, i) => {
-            return <TouchableOpacity style={styles.list} key={i}>
+            return <List style={styles.list} key={i}>
+              <ListItem avatar>
+              <Left>
               <Icon name="md-people" />
+              </Left>
+              <Body>
               <Text style={styles.text}>Circle Name: {value.Circle.name}</Text>
-              {/* <Text style={styles.text}>Circle Name: Text</Text> */}
-              {/*<Icon style={styles.icon}
-              name="settings" />*/}
-            </TouchableOpacity>
+              </Body>
+              <Right>
+              {/* <Icon name="settings" /> */}
+              <Button onPress={this.openUser.bind(this, currentUser)} bordered >
+                <Text>
+                    Open
+                </Text>
+              </Button>
+              </Right>
+              </ListItem>
+            </List>
           })}
         </Content>
       </Container>
@@ -88,11 +122,48 @@ const styles = StyleSheet.create({
       borderWidth: 1
     },
     text: {
-      marginTop :20,
-      marginLeft :20,
-      marginRight: 20
+      // marginRight: 20
     },
-    icon: {
-        justifyContent: "flex-end"
-    }
   })
+
+  /*
+<Container>
+        <Header>
+          <Left>
+            <Button
+              transparent
+              onPress={() => this.props.navigation.navigate("DrawerOpen")}
+            >
+              <Icon name="menu" />
+            </Button>
+          </Left>
+          <Body style={{flex: 1}}>
+            <Title>{this.state.Data.name}</Title>
+            <Title>Your Circle</Title>
+          </Body>
+          <Right />
+        </Header>
+        <Content>
+        {this.state.Data.map((value, i) => {
+            return <List style={styles.list} key={i}>
+              <ListItem avatar>
+              <Left>
+              <Icon name="md-people" />
+              </Left>
+              <Body>
+              <Text style={styles.text}>Circle Name: {value.Circle.name}</Text>
+              </Body>
+              <Right>
+              <Icon name="settings" />
+              <Button onPress={this.openUser.bind(this, GroupId)} bordered >
+              <Text>
+                  Open
+              </Text>
+            </Button>
+            </Right>
+            </ListItem>
+          </List>
+        })}
+      </Content>
+    </Container>
+  */

@@ -45,19 +45,17 @@ static navigationOptions = {
     this.logout = this.logout.bind(this)
 }
 
-    componentWillMount() {
-        console.disableYellowBox = true
-    }
     // componentWillMount() {
-    //    AsyncStorage.setItem("userid","")
+    //     console.disableYellowBox = true
+    // //    AsyncStorage.setItem("userid","")
     //     this.checkstorage()
     // }
     
     // checkstorage() {
     //     AsyncStorage.getItem("userid").then((respon) => {
     //      userUid = respon    
-    //        if (userid !== null){
-    //         this.navig()
+    //        if (userUid !== null){
+    //         this.props.navigation.navigate("Home") 
     //         }
     //     })
     // }
@@ -76,26 +74,8 @@ static navigationOptions = {
     firebase.auth().signInWithEmailAndPassword(email, password)
     // Handle respnse here
     .then((responce) => {
-        // const uid = responce.uid
-        // AsyncStorage.setItem("userid", uid, JSON.stringify(responce), (error, result) => {
-        //     if (error) {
-        //         alert("error", error)
-        //     } else {
-        //         AsyncStorage.getItem("userid", (error, result) => {
-        //             if (result) {
-        //                 alert(result)
-        //                 result = JSON.parse(result);
-        //                 ToastAndroid.show('Thanks for Login', ToastAndroid.SHORT);
-        //                 this.nowLoginSuccess(),
-        //                 this.props.navigation.navigate("Home") 
-        //             } else {
-        //                 alert(error)
-        //             }
-        //         })
-        //     }
-        // });
-        //     .then(() => {
-        //     })
+        const uid = responce.uid
+        
         this.nowLoginSuccess(),
         ToastAndroid.show('Login', ToastAndroid.BOTTOM, 25, 50);
        this.props.navigation.navigate("Home") 
@@ -114,7 +94,7 @@ static navigationOptions = {
 
 logout() {
         firebase.auth().signOut().then( () => {
-        // ToastAndroid.show('Logout', ToastAndroid.SHORT);
+        ToastAndroid.show('Logout', ToastAndroid.SHORT);
         // Sign-out successful.
         this.props.navigation.navigate("Welcome");
         }).catch(function(error) {
@@ -212,3 +192,32 @@ const styles = StyleSheet.create({
     //     flex: 1
     //   },
 });
+
+/*
+// AsyncStorage.setItem("userid", uid, JSON.stringify(responce), (error, result) => {
+        //     if (error) {
+        //         alert("error", error)
+        //     } else {
+        //         AsyncStorage.getItem("userid", (error, result) => {
+        //             if (result) {
+        //                 alert(result)
+        //                 result = JSON.parse(result);
+        //                 ToastAndroid.show('Thanks for Login', ToastAndroid.SHORT);
+        //                 this.nowLoginSuccess(),
+        //                 this.props.navigation.navigate("Home") 
+        //             } else {
+        //                 alert(error)
+        //             }
+        //         })
+        //     }
+        // });
+        AsyncStorage.setItem("useruid", uid)
+        .then(() => {
+            this.nowLoginSuccess(),
+            ToastAndroid.show('Login', ToastAndroid.BOTTOM, 25, 50);
+               this.props.navigation.navigate("Home") 
+        })
+    })
+        //     .then(() => {
+        //     })
+*/
