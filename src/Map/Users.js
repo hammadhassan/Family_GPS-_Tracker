@@ -39,8 +39,8 @@ export default class Users extends Component {
       firebase.database().ref('Circles/' + currentUser + '/').on('value', (data) => {
         let obj = data.val();
         obj.groupId = data.key;
-        alert(data);
-        alert(currentUser);
+        // alert(data);
+        // alert(currentUser);
         // dispatch(SeletedGroupData(obj));
         // if (obj.Admin === currentUser) {
         //     Actions.adminright();
@@ -52,7 +52,7 @@ export default class Users extends Component {
 
 componentDidMount() {
     var DataArr = [];
-    let dbRef = firebase.database().ref("Circles/");
+    let dbRef = firebase.database().ref("Circles");
     dbRef.on("child_added", snap => {
       // let obj = data.val();
       DataArr = this.state.Data;
@@ -82,7 +82,7 @@ componentDidMount() {
             </Button>
           </Left>
           <Body style={{flex: 1}}>
-            <Title>{this.state.Data.name}</Title>
+            {/* <Title>{this.state.Data.name}</Title> */}
             <Title>Your Circle</Title>
           </Body>
           <Right />
@@ -95,7 +95,7 @@ componentDidMount() {
               <Icon name="md-people" />
               </Left>
               <Body>
-              <Text style={styles.text}>Circle Name: {value.Circle.name}</Text>
+              <Text style={styles.text}>Circle Name: {value.Circles.name}</Text>
               </Body>
               <Right>
               {/* <Icon name="settings" /> */}
